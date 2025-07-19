@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Convite Especial ❤️</title>
+  <style>
+    body {
+      background-color: #ffe6f0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      color: #d6336c;
+      font-size: 3em;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 30px;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .sim {
+      background-color: #ff80ab;
+      color: white;
+    }
+
+    .nao {
+      background-color: #bdbdbd;
+      color: white;
+    }
+
+    .cards {
+      display: none;
+      margin-top: 40px;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      width: 200px;
+      height: 300px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      color: white;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .card-front {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-back {
+      background-color: #ff80ab;
+      transform: rotateY(180deg);
+    }
+
+    /* Form endereço */
+    #formEndereco {
+      display: none;
+      flex-direction: column;
+      margin-top: 30px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    #formEndereco label {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+      color: #d6336c;
+    }
+
+    #formEndereco input {
+      padding: 12px 15px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      border: 2px solid #ff80ab;
+      margin-bottom: 20px;
+      outline: none;
+    }
+
+    #formEndereco button {
+      background-color: #d6336c;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #formEndereco button:hover {
+      background-color: #b02a58;
+    }
+
+    /* Mensagem final */
+    #mensagemFinal {
+      display: none;
+      margin-top: 40px;
+      font-size: 1.5em;
+      color: #d6336c;
+      text-align: center;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="titulo">Aceita sair comigo?</h1>
+  <div class="buttons" id="botoes">
+    <button class="sim" onclick="aceitou()">Sim ❤️</button>
+    <button class="nao" id="naoBtn" onmouseover="fugir()" onclick="fugir()">Não 😢</button>
+  </div>
+
+  <div class="cards" id="cards">
+    <div class="card" onclick="escolherLugar('Comida japonesa')">
+      <div class="card-inner">
+        <div
+          class="card-front"
+          style="background-image: url('https://source.unsplash.com/200x300/?japanese-food')"
+        >
+          <span>Restaurante A</span>
+        </div>
+        <div class="card-back">🍣 Comida japonesa</div>
+      </div>
+    </div>
+    <div class="card" onclick="escolherLugar('Pizza')">
+      <div class="card-inner">
+        <div
+          class="card-front"
+          style="background-image: url('https://source.unsplash.com/200x300/?pizza')"
+        >
+          <span>Restaurante B</span>
+        </div>
+        <div class="card-back">🍕 Noite da pizza</div>
+      </div>
+    </div>
+    <div class="card" onclick="escolherLugar('Jantar')">
+      <div class="card-inner">
+        <div
+          class="card-front"
+          style="background-image: url('https://source.unsplash.com/200x300/?romantic-dinner')"
+        >
+          <span>Restaurante C</span>
+        </div>
+        <div class="card-back">🥂 Jantar romântico</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form endereço -->
+  <form id="formEndereco" onsubmit="enviarEndereco(event)">
+    <label for="enderecoInput">Onde posso passar para buscar você? 🚗💕</label>
+    <input
+      type="text"
+      id="enderecoInput"
+      name="endereco"
+      placeholder="Digite seu endereço aqui"
+      required
+    />
+    <button type="submit">Enviar endereço</button>
+  </form>
+
+  <!-- Mensagem final -->
+  <div id="mensagemFinal">
+    <h1>Marcado!</h1>
+    <h2>Encontro marcado pro dia 01/07!</h2>
+    <h3>Às 19h eu passo para te pegar!</h3>
+    <p>Mal posso esperar para nosso encontro! ❤️</p>
+  </div>
+
+  <script>
+    const btn = document.getElementById("naoBtn");
+    const cards = document.getElementById("cards");
+    const titulo = document.getElementById("titulo");
+    const botoes = document.getElementById("botoes");
+    const formEndereco = document.getElementById("formEndereco");
+    const mensagemFinal = document.getElementById("mensagemFinal");
+    const enderecoInput = document.getElementById("enderecoInput");
+
+    let escolhaRestaurante = null; // pra guardar o restaurante escolhido
+
+    function aceitou() {
+      botoes.style.display = "none";
+      titulo.innerText = "Escolha onde vamos! 💕";
+      cards.style.display = "flex";
+    }
+
+    function fugir() {
+      btn.style.position = "absolute";
+      const x = Math.random() * (window.innerWidth - 110);
+      const y = Math.random() * (window.innerHeight - 60);
+      btn.style.left = `${x}px`;
+      btn.style.top = `${y}px`;
+    }
+
+    // Quando escolhe o restaurante, mostra o form de endereço
+    function escolherLugar(opcao) {
+      escolhaRestaurante = opcao;
+      cards.style.display = "none";
+      titulo.innerText = "Onde posso passar para buscar você? 🚗💕";
+      formEndereco.style.display = "flex";
+      enderecoInput.focus();
+    }
+
+    // Envia restaurante + endereço para o Google Sheets via Apps Script
+    function enviarEndereco(event) {
+      event.preventDefault();
+      const endereco = enderecoInput.value.trim();
+
+      if (!endereco) {
+        alert("Por favor, digite seu endereço.");
+        return;
+      }
+
+      // Dados para enviar
+      const dados = {
+        restaurante: escolhaRestaurante,
+        endereco: endereco,
+      };
+
+      fetch(
+        "https://script.google.com/macros/s/AKfycby8ZUhcdYgM7Tpa22enxUXNQBVPQEeNtcDA1_68EfkcLFelf_tbwbEYOgIcoyg0slhs/exec",
+        {
+          method: "POST",
+          mode: "no-cors", // para evitar bloqueio CORS, mas não pode ler resposta
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dados),
+        }
+      );
+
+      // Oculta o form e mostra a mensagem final
+      formEndereco.style.display = "none";
+      titulo.style.display = "none";
+      mensagemFinal.style.display = "block";
+    }
+  </script>
+</body>
+</html>
