@@ -161,25 +161,25 @@
   </div>
 
   <script>
-    const btn = document.getElementById("naoBtn");
-    const cards = document.getElementById("cards");
-    const titulo = document.getElementById("titulo");
-    const botoes = document.getElementById("botoes");
+  const btn = document.getElementById("naoBtn");
 
-    let escolhaRestaurante = null; // pra guardar o restaurante escolhido
+  function aceitou() {
+    document.body.innerHTML = `
+      <div class="section">
+        <h2 style="font-size: 2.2em; color: #d6336c;">Marcado! 💖</h2>
+        <img src="cachorro.jpg" alt="Cachorro com flor" style="max-width: 100%; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); margin-top: 20px;">
+      </div>
+    `;
+  }
 
-    function aceitou() {
-      botoes.style.display = "none";
-    }
-
-    function fugir() {
-      btn.style.position = "absolute";
-      const x = Math.random() * (window.innerWidth - 110);
-      const y = Math.random() * (window.innerHeight - 60);
-      btn.style.left = `${x}px`;
-      btn.style.top = `${y}px`;
-    }
-  </script>
+  function fugir() {
+    btn.style.position = "absolute";
+    const x = Math.random() * (window.innerWidth - 110);
+    const y = Math.random() * (window.innerHeight - 60);
+    btn.style.left = `${x}px`;
+    btn.style.top = `${y}px`;
+  }
+</script>
 
 </body>
 </html>
