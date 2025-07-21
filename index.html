@@ -2,41 +2,109 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Convite Especial ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Convite Especial 💌</title>
   <style>
     body {
+      margin: 0;
+      padding: 20px 20px;
       background-color: #ffe6f0;
       font-family: 'Comic Sans MS', cursive, sans-serif;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       flex-direction: column;
-      overflow: hidden;
-      padding: 20px;
-      box-sizing: border-box;
+      align-items: center;
     }
 
-    h1 {
-      color: #d6336c;
-      font-size: 3em;
-      margin-bottom: 50px;
+    .section {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      margin-bottom: 30px;
+      width: 90%;
+      max-width: 600px;
       text-align: center;
     }
 
-    .buttons {
+    .section h2 {
+      color: #d6336c;
+      margin-bottom: 15px;
+      font-size: 2em;
+    }
+
+    .section p {
+      font-size: 1.4em;
+      color: #333;
+    }
+
+    .cards {
       display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .card {
+      width: 480px;
+      height: 200px;
+      perspective: 1000px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+
+    .card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1em;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .card-front {
+      background-size: cover;
+      background-position: center;
+      background-image: url(mamma-jamma.png);
+    }
+
+    .card-back {
+      background-color: #ff80ab;
+      transform: rotateY(180deg);
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
       gap: 30px;
     }
 
     button {
-      padding: 15px 30px;
+      padding: 12px 28px;
       font-size: 1.2em;
       border: none;
       border-radius: 12px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
 
     .sim {
@@ -49,170 +117,47 @@
       color: white;
     }
 
-    .cards {
-      display: none;
-      margin-top: 40px;
-      gap: 40px;
-      justify-content: center;
-      flex-wrap: wrap;
+    .nao:hover {
+      transform: translateX(20px) translateY(-10px);
     }
 
-    .card {
-      width: 200px;
-      height: 300px;
-      perspective: 1000px;
-      cursor: pointer;
-    }
-
-    .card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
-    }
-
-    .card:hover .card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .card-front,
-    .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2em;
-      color: white;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-
-    .card-front {
-      background-size: cover;
-      background-position: center;
-    }
-
-    .card-back {
-      background-color: #ff80ab;
-      transform: rotateY(180deg);
-    }
-
-    /* Form endereço */
-    #formEndereco {
-      display: none;
-      flex-direction: column;
-      margin-top: 30px;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-    }
-
-    #formEndereco label {
-      font-size: 1.3em;
-      margin-bottom: 10px;
-      color: #d6336c;
-    }
-
-    #formEndereco input {
-      padding: 12px 15px;
-      font-size: 1.1em;
-      border-radius: 10px;
-      border: 2px solid #ff80ab;
-      margin-bottom: 20px;
-      outline: none;
-    }
-
-    #formEndereco button {
-      background-color: #d6336c;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    #formEndereco button:hover {
-      background-color: #b02a58;
-    }
-
-    /* Mensagem final */
-    #mensagemFinal {
-      display: none;
-      margin-top: 40px;
-      font-size: 1.5em;
-      color: #d6336c;
-      text-align: center;
-      max-width: 400px;
+    @media (max-width: 600px) {
+      .cards {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
 <body>
-  <h1 id="titulo">Aceita sair comigo?</h1>
-  <div class="buttons" id="botoes">
-    <button class="sim" onclick="aceitou()">Sim ❤️</button>
-    <button class="nao" id="naoBtn" onmouseover="fugir()" onclick="fugir()">Não 😢</button>
+
+  <div class="section" style="height: 100px;">
+    <h2 style="margin: 0px 0px;">Quando?</h2>
+    <p>Dia <strong>01 de Agosto</strong> às 19h!</p>
   </div>
 
-  <div class="cards" id="cards">
-    <div class="card" onclick="escolherLugar('Comida japonesa')">
-      <div class="card-inner">
-        <div
-          class="card-front"
-          style="background-image: url('https://source.unsplash.com/200x300/?japanese-food')"
-        >
-          <span>Restaurante A</span>
+  <div class="section" style="height: 290px;">
+    <h2 style="margin: 0px 0px;">Onde?</h2>
+    <div class="cards">
+      <div class="card" onclick="escolherLugar('Comida japonesa')">
+        <div class="card-inner">
+          <div class="card-front"></div>
+          <div class="card-back">
+            <h2 style="color: white; font-size:1.6em">Mamma Jamma do Shopping Tijuca</h2>
+            <p style="font-size: 1em">Um pedacinho da Itália no coração da Tijuca 🍕<br>
+  Perfeito pra saborear uma boa pizza e conversar com calma.</p>
+          </div>
         </div>
-        <div class="card-back">🍣 Comida japonesa</div>
-      </div>
-    </div>
-    <div class="card" onclick="escolherLugar('Pizza')">
-      <div class="card-inner">
-        <div
-          class="card-front"
-          style="background-image: url('https://source.unsplash.com/200x300/?pizza')"
-        >
-          <span>Restaurante B</span>
-        </div>
-        <div class="card-back">🍕 Noite da pizza</div>
-      </div>
-    </div>
-    <div class="card" onclick="escolherLugar('Jantar')">
-      <div class="card-inner">
-        <div
-          class="card-front"
-          style="background-image: url('https://source.unsplash.com/200x300/?romantic-dinner')"
-        >
-          <span>Restaurante C</span>
-        </div>
-        <div class="card-back">🥂 Jantar romântico</div>
       </div>
     </div>
   </div>
 
-  <!-- Form endereço -->
-  <form id="formEndereco" onsubmit="enviarEndereco(event)">
-    <label for="enderecoInput">Onde posso passar para buscar você? 🚗💕</label>
-    <input
-      type="text"
-      id="enderecoInput"
-      name="endereco"
-      placeholder="Digite seu endereço aqui"
-      required
-    />
-    <button type="submit">Enviar endereço</button>
-  </form>
-
-  <!-- Mensagem final -->
-  <div id="mensagemFinal">
-    <h1>Marcado!</h1>
-    <h2>Encontro marcado pro dia 01/08!</h2>
-    <h3>Às 19h eu passo para te pegar!</h3>
-    <p>Mal posso esperar para nosso encontro! ❤️</p>
+  <div class="section">
+    <h2>Você aceita sair comigo?</h2>
+    <div class="buttons">
+        <button class="sim" onclick="aceitou()">Sim ❤️</button>
+        <button class="nao" id="naoBtn" onmouseover="fugir()" onclick="fugir()">Não 😢</button>
+    </div>
   </div>
 
   <script>
@@ -220,16 +165,11 @@
     const cards = document.getElementById("cards");
     const titulo = document.getElementById("titulo");
     const botoes = document.getElementById("botoes");
-    const formEndereco = document.getElementById("formEndereco");
-    const mensagemFinal = document.getElementById("mensagemFinal");
-    const enderecoInput = document.getElementById("enderecoInput");
 
     let escolhaRestaurante = null; // pra guardar o restaurante escolhido
 
     function aceitou() {
       botoes.style.display = "none";
-      titulo.innerText = "Escolha onde vamos! 💕";
-      cards.style.display = "flex";
     }
 
     function fugir() {
@@ -239,49 +179,7 @@
       btn.style.left = `${x}px`;
       btn.style.top = `${y}px`;
     }
-
-    // Quando escolhe o restaurante, mostra o form de endereço
-    function escolherLugar(opcao) {
-      escolhaRestaurante = opcao;
-      cards.style.display = "none";
-      titulo.innerText = "Onde posso passar para buscar você? 🚗💕";
-      formEndereco.style.display = "flex";
-      enderecoInput.focus();
-    }
-
-    // Envia restaurante + endereço para o Google Sheets via Apps Script
-    function enviarEndereco(event) {
-      event.preventDefault();
-      const endereco = enderecoInput.value.trim();
-
-      if (!endereco) {
-        alert("Por favor, digite seu endereço.");
-        return;
-      }
-
-      // Dados para enviar
-      const dados = {
-        restaurante: escolhaRestaurante,
-        endereco: endereco,
-      };
-
-      fetch(
-        "https://script.google.com/macros/s/AKfycby8ZUhcdYgM7Tpa22enxUXNQBVPQEeNtcDA1_68EfkcLFelf_tbwbEYOgIcoyg0slhs/exec",
-        {
-          method: "POST",
-          mode: "no-cors", // para evitar bloqueio CORS, mas não pode ler resposta
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dados),
-        }
-      );
-
-      // Oculta o form e mostra a mensagem final
-      formEndereco.style.display = "none";
-      titulo.style.display = "none";
-      mensagemFinal.style.display = "block";
-    }
   </script>
+
 </body>
 </html>
